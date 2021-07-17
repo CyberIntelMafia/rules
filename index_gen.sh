@@ -1,8 +1,19 @@
 #!/bin/bash
 
+error(){
+	printf "\033[35mError:\t\033[31m${1}!\033[0m\n"
+}
+
+if [ -f "lib/blacklist.sh" ];
+then
+	source "lib/blacklist.sh"
+	echo $AVOID
+else
+	error "Missing lib file 'blacklist'"
+fi
+
 function get_folders {
     local INDECES=()
-    AVOID="utils|deprecated"
     for folder in $(ls -d */ | grep -vE $AVOID); do
         INDECES+="$folder "
     done
